@@ -1,0 +1,43 @@
+Config { font = "xft:Dejavu Sans-10"
+       , additionalFonts = []
+       , borderColor = "black"
+       , border = TopB
+       , bgColor = "black"
+       , fgColor = "grey"
+       , alpha = 255
+       , position = Top
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run Weather "ULLI" ["-t","<station>: <tempC>C",
+                                          "-L","18","-H","25",
+                                          "--normal","green",
+                                          "--high","red",
+                                          "--low","lightblue"] 36000
+                    , Run Wireless "wlp3s0" [] 10
+                    , Run Volume "default" "Master" [] 10
+                    , Run Brightness ["--", "-D", "intel_backlight"] 60
+                    , Run Kbd []
+                    , Run Cpu ["-L","3","-H","50",
+                               "--normal","green","--high","red"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run DiskIO [("sda", "<read> <write>")] [] 10
+                    , Run ThermalZone 0 ["-t","<id>: <temp>C"] 30
+                    , Run CpuFreq ["-t", "Freq:<cpu0>|<cpu1>GHz", "-L", "0", "-H", "2",
+                "-l", "lightblue", "-n","white", "-h", "red"] 50
+                    , Run Battery [] 600
+                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%bright% | %kbd%"
+--       , template = "%cpu% | %memory% | %wlp3s0wi% | %diskio% | %thermal0% | %cpufreq% | %default:Master% | %bright% | %battery% }\
+--                    \{ <fc=#ee9a00>%date%</fc>| %ULLI%"
+       }
+
