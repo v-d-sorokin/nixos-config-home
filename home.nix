@@ -31,10 +31,15 @@
       epkgs.company-cabal
     ];
   };
+  home.file."emacs.d/home.el".text = builtins.readFile "emacs.el";
+  home.file."emacs.d/haskell-tab-indent.el".text = builtins.readFile "haskell-tab-indent.el";
   programs.git = {
     enable = true;
     userName = "Vladimir Sorokin";
     userEmail = "v.d.sorokin@gmail.com";
+    aliases = {
+      co = "checkout";
+    };
   };
 
   services = {
@@ -42,6 +47,16 @@
       enable = true;
       imageDirectory = "%h/Dropbox/Photos/Backgrounds";
       interval = "*:0/30";
+    };
+    stalonetray = {
+      enable = true;
+      config = {
+        geometry = "3x1-600+0";
+        decorations = null;
+        icon_size = 30;
+        sticky = true;
+        background = "#cccccc";
+      };
     };
     udiskie = {
       enable = true;
@@ -65,5 +80,11 @@
           haskellPackages.taffybar
         ];
       };
+      config = "xmonad.hs";
   };
+#  home.file.".xmonad/xmonad.hs".text = builtins.readFile "xmonad.hs";
+  home.file.".config/xmobar/xmobarrc".text = builtins.readFile "xmobarrc";
+
+  home.file.".config/taffybar/taffybar.hs".text = builtins.readFile "taffybar.hs";
+  home.file.".config/taffybar/taffybar.rc".text = builtins.readFile "taffybar.rc";
 }

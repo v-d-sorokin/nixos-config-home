@@ -15,12 +15,13 @@ Config { font = "xft:Dejavu Sans-10"
        , iconRoot = "."
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run Weather "ULLI" ["-t","<station>: <tempC>C",
+       , commands = [ Run Weather "ULLI" ["-t","<tempC>C",
                                           "-L","18","-H","25",
                                           "--normal","green",
                                           "--high","red",
                                           "--low","lightblue"] 36000
-                    , Run Wireless "wlp3s0" [] 10
+--                    , Run Wireless "wlp3s0" [] 10
+                    , Run DynNetwork [] 10
                     , Run Volume "default" "Master" [] 10
                     , Run Brightness ["--", "-D", "intel_backlight"] 60
                     , Run Kbd []
@@ -29,15 +30,15 @@ Config { font = "xft:Dejavu Sans-10"
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run DiskIO [("sda", "<read> <write>")] [] 10
                     , Run ThermalZone 0 ["-t","<id>: <temp>C"] 30
-                    , Run CpuFreq ["-t", "Freq:<cpu0>|<cpu1>GHz", "-L", "0", "-H", "2",
-                "-l", "lightblue", "-n","white", "-h", "red"] 50
+                    , Run CpuFreq ["-t", "Freq:<cpu0>GHz", "-L", "0", "-H", "2", "-l", "lightblue", "-n","white", "-h", "red"] 50
+--                    , Run MPD ["-t", "<state>: <artist> - <track>"] 10
                     , Run Battery [] 600
                     , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%bright% | %kbd%"
---       , template = "%cpu% | %memory% | %wlp3s0wi% | %diskio% | %thermal0% | %cpufreq% | %default:Master% | %bright% | %battery% }\
---                    \{ <fc=#ee9a00>%date%</fc>| %ULLI%"
+--       , template = "%bright% | %kbd%"
+       , template = "%cpu% | %memory% | %dynnetwork% | %diskio% | %thermal0% | %default:Master% | %bright% | %battery% }\
+                    \{ <fc=#ee9a00>%date%</fc>| %kbd% | %ULLI%"
        }
 
