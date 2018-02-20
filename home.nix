@@ -7,6 +7,9 @@
     pkgs.haskellPackages.si
     pkgs.haskellPackages.taffybar
     pkgs.haskellPackages.xmobar
+    pkgs.libnotify
+    pkgs.notify-osd
+    pkgs.pasystray
   ];
   programs.home-manager.enable = true;
   programs.home-manager.path = https://github.com/rycee/home-manager/archive/master.tar.gz;
@@ -31,8 +34,10 @@
       epkgs.company-cabal
     ];
   };
-  home.file."emacs.d/home.el".text = builtins.readFile ./emacs.el;
-  home.file."emacs.d/haskell-tab-indent.el".text = builtins.readFile ./haskell-tab-indent.el;
+
+  home.file.".emacs.d/haskell-tab-indent.el".text = builtins.readFile ./haskell-tab-indent.el;
+  home.file.".emacs.d/init.el".text = builtins.readFile ./emacs.el;
+
   programs.git = {
     enable = true;
     userName = "Vladimir Sorokin";
@@ -46,17 +51,24 @@
     random-background = {
       enable = true;
       imageDirectory = "%h/Dropbox/Photos/Backgrounds";
-      interval = "*:0/30";
+      interval = "30min";
     };
     stalonetray = {
-      enable = true;
+      enable = false;
       config = {
-        geometry = "3x1-600+0";
+        geometry = "10x1-440+0";
         decorations = null;
-        icon_size = 30;
+        icon_size = 32;
         sticky = true;
-        background = "#cccccc";
+        background = "#2d2d2d";
       };
+      extraConfig = ''
+grow_gravity W
+icon_gravity NE
+kludges force_icons_size,use_icons_hints
+skip_taskbar yes
+window_layer top
+      '';
     };
     udiskie = {
       enable = true;
@@ -71,15 +83,18 @@
   };
   xsession = {
     enable = true;
-    #pointerCursor = { package = ""; name = ""; size = 64; };
+    pointerCursor = { package = pkgs.vanilla-dmz; name = "Vanilla-DMZ"; size = 64; };
+    initExtra = ''
+      setxkbmap -model pc105 -layout us,ru -option grp:alt_shift_toggle
+      pasystray &
+    '';
 
     windowManager.xmonad = {
       enable = true;
       enableContribAndExtras = true;
-      extraPackages = haskellPackages: [ 
+      extraPackages = haskellPackages: [
           haskellPackages.taffybar
         ];
-        #      config = "xmonad.hs";
     };
   };
   home.file.".xmonad/xmonad.hs".text = builtins.readFile ./xmonad.hs;

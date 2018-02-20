@@ -14,6 +14,7 @@
         console-program = self.callPackage /home/vs/Syncthing/Sources/console-program {};
         cloud = self.callPackage /home/vs/Syncthing/Sources/cloud {};
         cloud-sync = self.callPackage /home/vs/Syncthing/Sources/cloud-sync {};
+        taffybar = self.callPackage /home/vs/Syncthing/Sources/taffybar {};
       };
     };
   };

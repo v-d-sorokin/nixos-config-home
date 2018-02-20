@@ -5,12 +5,10 @@ import           XMonad.Hooks.ManageDocks
 import           XMonad.Util.EZConfig             (additionalKeys)
 import           XMonad.Util.Run                  (spawnPipe)
 
-
 import           XMonad.Layout.DwmStyle
 import           XMonad.Layout.LayoutCombinators
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.SimplestFloat
-
 
 import           XMonad.Prompt
 import           XMonad.Prompt.Shell
@@ -26,13 +24,10 @@ import           Graphics.X11.ExtraTypes.XF86
 import           System.Taffybar.Hooks.PagerHints (pagerHints)
 import           XMonad.Hooks.EwmhDesktops        (ewmh)
 
-
-import           Control.Concurrent               (forkOS)
 import           XMonad.Config.Desktop
 import           XMonad.Hooks.ManageHelpers
 import           XMonad.Layout.ToggleLayouts      (ToggleLayout (..),
                                                    toggleLayouts)
-
 import           XMonad.Layout.Column
 import           XMonad.Layout.DragPane
 import           XMonad.Layout.FixedColumn
@@ -78,14 +73,13 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
-    , ((modm,               xK_m ), sendMessage $ JumpToLayout "Full")
-    , ((modm,               xK_f ), sendMessage $ JumpToLayout "SimplestFloat")
-    , ((modm,               xK_t ), sendMessage $ JumpToLayout "Tall")
+    , ((modm,               xK_m     ), sendMessage $ JumpToLayout "Full")
+    , ((modm,               xK_f     ), sendMessage $ JumpToLayout "SimplestFloat")
+    , ((modm,               xK_t     ), sendMessage $ JumpToLayout "Tall")
 
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
-    , ((modm .|. shiftMask, xK_Delete     ), sendMessage $ ToggleStrut U)
-
+    , ((modm .|. shiftMask, xK_Delete), sendMessage $ ToggleStrut U)
 
     -- Resize viewed windows to the correct size
     , ((modm,               xK_n     ), refresh)
@@ -118,13 +112,13 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 --    , ((modm .|. shiftMask,   xK_space     ), withFocused $ windows . W.sink)
 
     -- Increment the number of windows in the master area
-    , ((modm .|. shiftMask, xK_h), sendMessage (IncMasterN 1))
+    , ((modm .|. shiftMask, xK_h     ), sendMessage (IncMasterN 1))
 
     -- Deincrement the number of windows in the master area
-    , ((modm .|. shiftMask, xK_l), sendMessage (IncMasterN (-1)))
+    , ((modm .|. shiftMask, xK_l     ), sendMessage (IncMasterN (-1)))
 
     -- Push window back into tiling
-    , ((modm .|. shiftMask, xK_space), withFocused $ windows . W.sink)
+    , ((modm .|. shiftMask, xK_space ), withFocused $ windows . W.sink)
 
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
@@ -142,31 +136,23 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
       -- multimedia keys
       --
-    , ((0            , xF86XK_AudioLowerVolume), spawn "sudo amixer -q set Master 2dB-")
-    , ((0            , xF86XK_AudioRaiseVolume), spawn "sudo amixer -q set Master 2dB+")
-    , ((0            , xF86XK_AudioMute), spawn "sudo amixer -q set Master toggle")
+    , ((0                 , xF86XK_AudioLowerVolume), spawn "amixer -q set Master -2dB")
+    , ((0                 , xF86XK_AudioRaiseVolume), spawn "amixer -q set Master +2dB")
+    , ((0                 , xF86XK_AudioMute), spawn "amixer -q set Master toggle")
       -- XF86AudioNext
-    , ((0            , 0x1008ff17), spawn "audacious -f")
+    , ((0                 , 0x1008ff17), spawn "audacious -f")
       -- XF86AudioPrev
-    , ((0            , 0x1008ff16), spawn "audacious -r")
+    , ((0                 , 0x1008ff16), spawn "audacious -r")
       -- XF86AudioPlay
-    , ((0            , 0x1008ff14), spawn "audacious -t")
-    , ((0            , xF86XK_Calculater), spawn "kcalc")
-    , ((0            , xF86XK_Sleep), spawn "sudo systemctl suspend")
+    , ((0                 , 0x1008ff14), spawn "audacious -t")
+    , ((0                 , xF86XK_Calculater), spawn "kcalc")
+    , ((0                 , xF86XK_Sleep), spawn "sudo systemctl suspend")
       -- XF86WebCam
-    , ((0            , 0x1008ff8f),  spawn "scrot")
-    , ((0            , xF86XK_Music), spawn "audacious")
-    , ((0            , xF86XK_AudioMedia), spawn "audacious")
-      --  0x1008ff41, XF86Launch1
-      --  , ((modm,               xK_space ), sendMessage NextLayout)
-      --  , ((0,               xK_Tab   ), windows W.focusDown)
-      -- XF86ZoomIn
-      , ((0            , xF86XK_LaunchA),  spawn "xdotool key ctrl click 4")
-      -- XF86ZoomOut
-      , ((0            , xF86XK_ZoomOut),  spawn "xdotool key 'ctrl+minus'")
-      --
-      , ((0, xF86XK_MonBrightnessUp), spawn "xbacklight +10")
-      , ((0, xF86XK_MonBrightnessDown), spawn "xbacklight -10")
+    , ((0                 , 0x1008ff8f),  spawn "scrot")
+    , ((0                 , xF86XK_Music), spawn "audacious")
+    , ((0                 , xF86XK_AudioMedia), spawn "audacious")
+    , ((0                 , xF86XK_MonBrightnessUp), spawn "xbacklight +5")
+    , ((0                 , xF86XK_MonBrightnessDown), spawn "xbacklight -5")
     ]
     ++
 
@@ -210,12 +196,13 @@ myLayouts = avoidStruts (smartBorders others) ||| smartBorders Full
 
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
+    , className =? "mpv"            --> doFloat
     , className =? "Gimp"           --> doFloat
     , className =? "XTerm"          --> doFloat
     , className =? "feh"            --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
-    , className =? "Audacious" --> doShift "ι"
+    , className =? "Audacious"      --> doShift "ι"
     ] <+> manageDocks
 
 main = do
@@ -232,4 +219,4 @@ main = do
         , mouseBindings      = myMouseBindings
         , layoutHook         = myLayouts
         , manageHook         = myManageHook <+> manageHook def <+> manageDocks
-    }
+        }

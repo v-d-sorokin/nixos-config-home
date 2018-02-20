@@ -10,6 +10,36 @@
 (set-face-attribute 'default nil :font "DejaVu Sans Mono-12")
 (set-frame-font "DejaVu Sans Mono-12" nil t)
 (set-default-font "DejaVu Sans Mono-12")
+
+(setq resize-mini-windows t) ; grow and shrink as necessary
+(setq max-mini-window-height 10) ; grow up to max of 10 lines
+(setq minibuffer-scroll-window t)
+ ;; line numbers
+(global-linum-mode 1)
+;; no tabs
+(setq c-basic-indent 4)
+(setq tab-width 4)
+(setq-default indent-tabs-mode nil)
+(setq indent-tabs-mode nil)
+
+(defun show-notification (notification)
+  "Show notification. Use notify-send."
+  (start-process "notify-send" nil "notify-send" "-i" "/usr/local/share/emacs/24.5/etc/images/icons/hicolor/32x32/apps/emacs.png" notification)
+)
+
+(defun notify-compilation-result (buffer msg)
+  "Notify that the compilation is finished"
+  (if (equal (buffer-name buffer) "*compilation*")
+    (if (string-match "^finished" msg)
+      (show-notification "Compilation Successful")
+      (show-notification "Compilation Failed")
+    )
+  )
+)
+
+(add-to-list 'compilation-finish-functions 'notify-compilation-result)
+
+
 (require 'nix-mode)
 
 ; Haskell with Dante
@@ -29,7 +59,7 @@
     )
 )
 
-(autoload 'haskell-tab-indent-mode "haskell-tab-indent.el")
+(autoload 'haskell-tab-indent-mode "~/.emacs.d/haskell-tab-indent.el")
 
 (use-package dante
   :ensure t

@@ -1,44 +1,14 @@
-Config { font = "xft:Dejavu Sans-10"
-       , additionalFonts = []
-       , borderColor = "black"
-       , border = TopB
-       , bgColor = "black"
-       , fgColor = "grey"
-       , alpha = 255
-       , position = Top
-       , textOffset = -1
-       , iconOffset = -1
-       , lowerOnStart = True
-       , pickBroadest = False
-       , persistent = False
-       , hideOnStart = False
-       , iconRoot = "."
-       , allDesktops = True
-       , overrideRedirect = True
-       , commands = [ Run Weather "ULLI" ["-t","<tempC>C",
-                                          "-L","18","-H","25",
-                                          "--normal","green",
-                                          "--high","red",
-                                          "--low","lightblue"] 36000
---                    , Run Wireless "wlp3s0" [] 10
-                    , Run DynNetwork [] 10
-                    , Run Volume "default" "Master" [] 10
-                    , Run Brightness ["--", "-D", "intel_backlight"] 60
-                    , Run Kbd []
-                    , Run Cpu ["-L","3","-H","50",
-                               "--normal","green","--high","red"] 10
-                    , Run Memory ["-t","Mem: <usedratio>%"] 10
-                    , Run DiskIO [("sda", "<read> <write>")] [] 10
-                    , Run ThermalZone 0 ["-t","<id>: <temp>C"] 30
-                    , Run CpuFreq ["-t", "Freq:<cpu0>GHz", "-L", "0", "-H", "2", "-l", "lightblue", "-n","white", "-h", "red"] 50
---                    , Run MPD ["-t", "<state>: <artist> - <track>"] 10
-                    , Run Battery [] 600
-                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
-                    ]
-       , sepChar = "%"
-       , alignSep = "}{"
---       , template = "%bright% | %kbd%"
-       , template = "%cpu% | %memory% | %dynnetwork% | %diskio% | %thermal0% | %default:Master% | %bright% | %battery% }\
-                    \{ <fc=#ee9a00>%date%</fc>| %kbd% | %ULLI%"
-       }
-
+Config
+    { font = "xft:ProggyTiny:pixelsize=32"
+    , fgColor = "#888888"
+    , bgColor = "#2d2d2d"
+    , position = TopSize L 100 32
+    , commands = [ Run StdinReader
+                 , Run Date "<fc=#bbbbbb>%A %d, <fc=#ffffff>%H:%M</fc></fc>" "date" 30
+                 , Run MultiCpu ["-S", "on", "-t", "<total>"] 30
+                 , Run Memory ["-S", "on", "-t", "<usedratio>"] 30
+                 , Run DynNetwork ["-t", "<rx>/<tx>Kb/s"] 30
+                 , Run Battery ["-S", "on", "-t", "<left>"] 30
+                 ]
+    , template = "  %StdinReader% }{<fc=#888888><fc=#6b2c74><icon=.xmonad/icons/down.xbm/></fc><fc=#88591b><icon=.xmonad/icons/up.xbm/></fc>%dynnetwork%<fc=#2c4b50>|<icon=.xmonad/icons/cpu.xbm/></fc>%multicpu%|<fc=#366136><icon=.xmonad/icons/mem.xbm/></fc>%memory%</fc>|<fc=#7c3131><icon=.xmonad/icons/battery.xbm/></fc>%battery%       %date%"
+    }
