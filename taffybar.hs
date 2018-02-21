@@ -70,7 +70,7 @@ main = do
         pager = taffyPagerNew defaultPagerConfig
 --        note = notifyAreaNew defaultNotificationConfig
         wea = weatherNew ((defaultWeatherConfig "ULLI") { weatherTemplate = "$tempC$ °C"}) 10
-        mem = pollingGraphNew memCfg 1 memCallback
+--        mem = pollingGraphNew memCfg 1 memCallback
         cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
         temp = pollingGraphNew tempCfg 1 cpuTempCallback
         bri = pollingLabelNew' "-" 1 briCallback

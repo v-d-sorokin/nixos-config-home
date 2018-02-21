@@ -10,6 +10,10 @@
     pkgs.libnotify
     pkgs.notify-osd
     pkgs.pasystray
+    pkgs.xlibs.xbacklight
+    pkgs.conky
+    pkgs.evilvte
+    pkgs.gxneur
   ];
   programs.home-manager.enable = true;
   programs.home-manager.path = https://github.com/rycee/home-manager/archive/master.tar.gz;
@@ -48,10 +52,18 @@
   };
 
   services = {
+    compton = {
+      enable = true;
+      backend = "glx";
+      vSync = "opengl-swc";
+    };
     random-background = {
       enable = true;
       imageDirectory = "%h/Dropbox/Photos/Backgrounds";
       interval = "30min";
+    };
+    taffybar = {
+      enable = true;
     };
     stalonetray = {
       enable = false;
@@ -83,10 +95,16 @@ window_layer top
   };
   xsession = {
     enable = true;
-    pointerCursor = { package = pkgs.vanilla-dmz; name = "Vanilla-DMZ"; size = 64; };
+    pointerCursor = {
+      package = pkgs.oxygen;
+      name = "Oxygen_Black";
+      size = 48;
+    };
     initExtra = ''
-      setxkbmap -model pc105 -layout us,ru -option grp:alt_shift_toggle
-      pasystray &
+      ${pkgs.xorg.setxkbmap}/bin/setxkbmap -model pc105 -layout us,ru -option grp:alt_shift_toggle
+      ${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name  left_ptr
+      ${pkgs.pasystray}/bin/pasystray &
+      ${pkgs.gxneur}/bin/gxneur &
     '';
 
     windowManager.xmonad = {
@@ -97,9 +115,26 @@ window_layer top
         ];
     };
   };
+  gtk = {
+    enable = true;
+    font = {
+      package = pkgs.dejavu_fonts;
+      name = "DejaVu Sans 12";
+    };
+    iconTheme = {
+      package = pkgs.hicolor_icon_theme;
+      name = "hicolor";
+    };
+  };
   home.file.".xmonad/xmonad.hs".text = builtins.readFile ./xmonad.hs;
   home.file.".config/xmobar/xmobarrc".text = builtins.readFile ./xmobarrc;
 
   home.file.".config/taffybar/taffybar.hs".text = builtins.readFile ./taffybar.hs;
   home.file.".config/taffybar/taffybar.rc".text = builtins.readFile ./taffybar.rc;
+
+  # gconftool-2 -s /apps/notify-osd/gravity --type=int номер
+  home.file.".notify-osd".text = builtins.readFile ./notify-osd.conf;
+  home.file.".xxkbrc".text = builtins.readFile ./xxkbrc;
+
+  #https://github.com/brndnmtthws/conky
 }

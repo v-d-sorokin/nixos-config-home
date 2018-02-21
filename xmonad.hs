@@ -56,7 +56,7 @@ myNormalBorderColor  = "#333333"
 myFocusedBorderColor = "#235a6e"
 
 shellConf :: XPConfig
-shellConf = def { font = "xft: Sans-12", height = 40 }
+shellConf = def { font = "xft: Sans-12", height = 40, position = CenteredAt 0.5 0.5 }
 
 -- Key bindings. Add, modify or remove key bindings here.
 myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
@@ -206,7 +206,6 @@ myManageHook = composeAll
     ] <+> manageDocks
 
 main = do
-    xmproc <- spawnPipe "taffybar"
     xmonad $ docks $ ewmh $ pagerHints $ def
         { terminal           = myTerminal
         , focusFollowsMouse  = myFocusFollowsMouse
