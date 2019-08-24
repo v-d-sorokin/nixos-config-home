@@ -21,7 +21,7 @@ import qualified Data.Map                         as M
 import qualified XMonad.StackSet                  as W
 
 import           Graphics.X11.ExtraTypes.XF86
-import           System.Taffybar.Hooks.PagerHints (pagerHints)
+import           System.Taffybar.Support.PagerHints (pagerHints)
 import           XMonad.Hooks.EwmhDesktops        (ewmh)
 
 import           XMonad.Config.Desktop
@@ -136,8 +136,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
       -- multimedia keys
       --
-    , ((0                 , xF86XK_AudioLowerVolume), spawn "amixer -q set Master -2dB")
-    , ((0                 , xF86XK_AudioRaiseVolume), spawn "amixer -q set Master +2dB")
+    , ((0                 , xF86XK_AudioLowerVolume), spawn "amixer -q set Master 5%-")
+    , ((0                 , xF86XK_AudioRaiseVolume), spawn "amixer -q set Master 5%+")
     , ((0                 , xF86XK_AudioMute), spawn "amixer -q set Master toggle")
       -- XF86AudioNext
     , ((0                 , 0x1008ff17), spawn "audacious -f")
@@ -153,6 +153,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((0                 , xF86XK_AudioMedia), spawn "audacious")
     , ((0                 , xF86XK_MonBrightnessUp), spawn "xbacklight +5")
     , ((0                 , xF86XK_MonBrightnessDown), spawn "xbacklight -5")
+    , ((0                 , xF86XK_LaunchA), spawn "firefox")
     ]
     ++
 
@@ -206,6 +207,7 @@ myManageHook = composeAll
     ] <+> manageDocks
 
 main = do
+--    xmlproc <- spawnPipe "taffybar" -- "~/.cache/taffybar/taffybar-linux-x86_64"
     xmonad $ docks $ ewmh $ pagerHints $ def
         { terminal           = myTerminal
         , focusFollowsMouse  = myFocusFollowsMouse

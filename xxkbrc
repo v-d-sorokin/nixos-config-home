@@ -1,0 +1,51 @@
+XXkb.mainwindow.enable: yes
+! Выключаем показ иконки xxkb в заголовках окон приложений
+XXkb.mainwindow.appicon: no
+! Указываем, что значок переключателя должен показываться
+! в трее
+XXkb.mainwindow.type: tray
+! Устанавливаем тип трея
+XXkb.mainwindow.in_tray: KDE
+! Устанавливаем размер значка, который будет показываться в трее
+! (!) Обязательно надо указать часть "+0+0"
+XXkb.mainwindow.geometry: 15x15+0+0
+! Указываем значки для каждой раскладки из тех,
+! что были указаны в качестве параметров команды setxkbmap
+! (!) Наличие всех 4 параметров в файле настроек обязательно.
+XXkb.mainwindow.image.1: en15.xpm
+XXkb.mainwindow.image.2: ru15.xpm
+XXkb.mainwindow.image.3:
+XXkb.mainwindow.image.4:
+XXkb.mainwindow.label.enable: no
+
+XXkb.controls.add_when_start: yes
+XXkb.controls.add_when_create: no
+XXkb.controls.add_when_change: yes
+XXkb.controls.focusout: yes
+XXkb.controls.two_state: no
+XXkb.controls.button_delete: yes
+XXkb.controls.button_delete_and_forget: no
+XXkb.controls.mainwindow_delete: no
+XXkb.group.base: 1
+XXkb.group.alt: 2
+
+XXkb.bell.enable: no
+XXkb.bell.percent: -50
+XXkb.app_list.wm_name.ignore:
+
+XXkb.image.path: /nix/store/6bsq8fiicyrivkzzms5hn05kswdg794y-xxkb-1.11.1/share/xxkb
+
+XXkb.button.enable: yes
+XXkb.button.geometry: 15x15-55+2
+XXkb.button.label.enable: yes
+XXkb.button.label.text.1: us
+XXkb.button.label.text.2: ru
+XXkb.button.label.background: #a7a7a7
+XXkb.button.label.foreground: black
+XXkb.button.border.color: black
+XXkb.button.border.width: 0
+XXkb.button.label.font: -misc-*-r-*-12-*
+
+XXkb.ignore.reverse: no
+XXkb.mousebutton.1.reverse: no
+XXkb.mousebutton.3.reverse: no

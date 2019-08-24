@@ -22,7 +22,7 @@ let
             "rainbow"
             "rainbow_parentheses"
             "stylish-haskell"
-            "ghc-mod-vim"
+#            "ghc-mod-vim"
             "vimproc"
             "haskellConceal"
             "haskellConcealPlus"
