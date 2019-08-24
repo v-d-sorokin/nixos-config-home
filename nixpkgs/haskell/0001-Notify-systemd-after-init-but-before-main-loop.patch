@@ -1,0 +1,93 @@
+From 9912ae5478bc91990012c869a0d5b628dc1f1ff6 Mon Sep 17 00:00:00 2001
+From: Vladimir Sorokin <v.d.sorokin@gmail.com>
+Date: Fri, 23 Feb 2018 21:01:09 +0300
+Subject: [PATCH] Notify systemd after init but before main loop
+
+---
+ src/System/Taffybar.hs | 25 ++++++++++++++-----------
+ taffybar.cabal         |  8 ++++++++
+ 2 files changed, 22 insertions(+), 11 deletions(-)
+
+diff --git a/src/System/Taffybar.hs b/src/System/Taffybar.hs
+index 12ac6dd..bdb4d83 100644
+--- a/src/System/Taffybar.hs
++++ b/src/System/Taffybar.hs
+@@ -104,22 +104,24 @@ module System.Taffybar
+   , dyreTaffybarMain
+   ) where
+ 
+-import qualified Config.Dyre as Dyre
+-import qualified Config.Dyre.Params as Dyre
++import qualified Config.Dyre                    as Dyre
++import qualified Config.Dyre.Params             as Dyre
+ import           Control.Monad
+-import qualified Data.GI.Gtk.Threading as GIThreading
+-import qualified Data.Text as T
+-import qualified GI.Gdk as Gdk
+-import qualified GI.Gtk as Gtk
++import qualified Data.GI.Gtk.Threading          as GIThreading
++import qualified Data.Text                      as T
++import qualified GI.Gdk                         as Gdk
++import qualified GI.Gtk                         as Gtk
+ import           Graphics.X11.Xlib.Misc
+ import           System.Directory
+-import           System.Environment.XDG.BaseDir ( getUserConfigFile )
+-import           System.Exit ( exitFailure )
+-import           System.FilePath ( (</>) )
+-import qualified System.IO as IO
++import           System.Environment.XDG.BaseDir (getUserConfigFile)
++import           System.Exit                    (exitFailure)
++import           System.FilePath                ((</>))
++import qualified System.IO                      as IO
+ import           System.Taffybar.Context
+ 
+-import           Paths_taffybar ( getDataDir )
++import           System.Systemd.Daemon
++
++import           Paths_taffybar                 (getDataDir)
+ 
+ -- | The parameters that are passed to Dyre when taffybar is invoked with
+ -- 'dyreTaffybar'.
+@@ -184,5 +186,6 @@ startTaffybar config = do
+   _ <- startCSS
+   _ <- buildContext config
+ 
++  _ <- notifyReady
+   Gtk.main
+   return ()
+diff --git a/taffybar.cabal b/taffybar.cabal
+index bf168ab..caf5256 100644
+--- a/taffybar.cabal
++++ b/taffybar.cabal
+@@ -32,6 +32,10 @@ flag network-uri
+   description: network hack
+   default: True           
+ 
++flag systemd
++  description: systemd notify
++  default: True
++
+ library
+   default-extensions:
+     TupleSections
+@@ -95,6 +99,8 @@ library
+     build-depends: network-uri >= 2.6 && < 3, network >= 2.6 && < 3
+   else
+     build-depends: network-uri < 2.6, network < 2.6
++  if flag(systemd)
++    build-depends: systemd
+   hs-source-dirs: src
+   pkgconfig-depends: gtk+-3.0
+   exposed-modules: System.Taffybar
+@@ -169,6 +175,8 @@ executable taffybar
+                , hslogger
+                , optparse-applicative
+                , taffybar
++  if flag(systemd)
++    build-depends: systemd
+ 
+   other-modules: Paths_taffybar
+ 
+-- 
+2.16.4
+
