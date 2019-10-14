@@ -36,7 +36,7 @@ import           XMonad.Layout.TwoPane
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 -- myTerminal      = "urxvt -fn 'xft:Source Code Pro:pixelsize=22' -background black -foreground gray"
-myTerminal = "evilvte"
+myTerminal = "urxvt"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool

@@ -8,7 +8,7 @@ let
     while [ 1 ] ; do
     # mplayer http://localhost:8908/tv.asf -fs -fixed-vo -zoom -cache 2048 $2 $3
     #  vlc http://localhost:8908/tv.asf
-      ${mpv}/bin/mpv http://localhost:8908/tv.asf -fs $2 $3
+      ${mpv}/bin/mpv http://localhost:8908/tv.asf -fs $2 $3 || true
       sleep 1
     done
   '';

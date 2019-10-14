@@ -43,7 +43,7 @@ main = do
                                         , graphLabel = Just "hdd"
                                      }
         netCfg = defaultGraphConfig
-    let clock = textClockNew Nothing "<span fgcolor='orange'>%a %b %_d %H:%M</span>" 1
+    let clock = textClockNew Nothing "<span fgcolor='white'>%a %b %_d %H:%M</span>" 1
 --        pager = taffyPagerNew defaultPagerConfig
         windows = windowsNew defaultWindowsConfig
 --        wea = weatherNew ((defaultWeatherConfig "ULLI") { weatherTemplate = "$tempC$ °C"}) 10

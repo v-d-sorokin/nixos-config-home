@@ -2,6 +2,17 @@
 
 let
   all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
+  spacemacs = pkgs.fetchFromGitHub {
+    owner = "syl20bnr";
+    repo = "spacemacs";
+    rev = "3747afb4b02575e794c8e74d1ca9af2fdbd9c525";
+    sha256 = "13yrv5j8lan19kg532x5q8rg4hqqm8d5h22dwz9hg9j43hhsq5q8";
+    postFetch = ''
+      mkdir -p $out
+      tar xf $downloadedFile --strip=1 --directory=$out
+      mkdir -p $out/.cache
+    '';
+  };
 in
 {
   home.packages = with pkgs; [
@@ -12,15 +23,16 @@ in
     pasystray
     xlibs.xbacklight
     conky
-    evilvte
+#    evilvte
+    rxvt_unicode
     gxneur
     libreoffice
     gnome3.nautilus
-    emacs
+#    emacs
     chromium
     tree
     gnome3.adwaita-icon-theme
-    sopcast-cli
+#    sopcast-cli
     coolreader
     fbreader
     at-spi2-core
@@ -32,8 +44,18 @@ in
 
     ccls
     pythonPackages.python-language-server
+    python2
 
-    #(all-hies.selection { selector = p: { inherit (p) ghc865 ghc864; }; })
+    ghc
+    cachix
+    linuxPackages.cpupower
+    pwgen
+
+#    mpv
+    smplayer
+    transmission
+
+    (all-hies.selection { selector = p: { inherit (p) ghc865; }; })
   ] ++ (with pkgs.haskellPackages; [
     si
     taffybar
@@ -46,40 +68,62 @@ in
     hasktags
     hoogle
     cabal-install
+#    cabal-helper
     cabal2nix
   ]);
-#  programs.home-manager.enable = true;
-#  programs.home-manager.path = https://github.com/rycee/home-manager/archive/master.tar.gz;
-#  programs.home-manager.path = "$HOME/Syncthing/Sources/home-manager";
 
-  programs.emacs = {
-    enable = false;
-    extraPackages = epkgs: [
-      epkgs.nix-mode
-      epkgs.magit
-      epkgs.use-package
-      epkgs.dante
-      epkgs.flycheck-color-mode-line
-      epkgs.flycheck-pos-tip
-      epkgs.flymake-hlint
-      epkgs.flycheck-haskell
-      # epkgs.zerodark-theme
-      epkgs.undo-tree
-      epkgs.idris-mode
-      epkgs.haskell-mode
-      epkgs.company
-      epkgs.company-ghc
-      epkgs.company-dict
-      epkgs.company-cabal
-      epkgs.lsp-mode
-      epkgs.lsp-ui
-      epkgs.lsp-haskell
-      epkgs.company-lsp
-    ];
+  manual = {
+    html.enable = true;
+    manpages.enable = true;
   };
 
-#  home.file.".emacs.d/haskell-tab-indent.el".text = builtins.readFile ./haskell-tab-indent.el;
-#  home.file.".emacs.d/init.el".text = builtins.readFile ./emacs.el;
+  programs.zsh = {
+    enable = true;
+    oh-my-zsh = {
+      enable = true;
+      theme = "cloud";
+      plugins = [ "git" "cabal" "docker" "git-extras" "python" "sudo" "systemd" "tmux" ];
+    };
+  };
+
+  programs.urxvt = {
+    enable = true;
+    fonts = [ "xft:Dejavu Sans Mono:pixelsize=30" ];
+  };
+
+  programs.jq = {
+    enable = true;
+  };
+
+  programs.firefox = {
+    enable = true;
+  };
+
+  programs.emacs = {
+    enable = true;
+    extraPackages = epkgs: [
+      #epkgs.nix-mode
+      #epkgs.magit
+      #epkgs.use-package
+      #epkgs.dante
+      #epkgs.flycheck-color-mode-line
+      #epkgs.flycheck-pos-tip
+      #epkgs.flymake-hlint
+      #epkgs.flycheck-haskell
+      # epkgs.zerodark-theme
+      #epkgs.undo-tree
+      #epkgs.idris-mode
+      #epkgs.haskell-mode
+      #epkgs.company
+      #epkgs.company-ghc
+      #epkgs.company-dict
+      #epkgs.company-cabal
+      #epkgs.lsp-mode
+      #epkgs.lsp-ui
+      #epkgs.lsp-haskell
+      #epkgs.company-lsp
+    ];
+  };
 
   programs.git = {
     enable = true;
@@ -88,28 +132,32 @@ in
     aliases = {
       co = "checkout";
     };
-  }
-  ;
+  };
+  programs.ssh = {
+    enable = true;
+  };
   programs.neovim = {
     enable = true;
   };
   programs.vim = {
     enable = true;
-    plugins = [
-      "LanguageClient-neovim"
-      "Syntastic"
-      "ctrlp"
-      "haskell-vim"
-      "Solarized"
-      "vim-nix"
-      "rainbow"
-      "rainbow_parentheses"
-      "vimproc"
+    plugins = with pkgs.vimPlugins; [
+      LanguageClient-neovim
+      Syntastic
+      ctrlp
+      haskell-vim
+      hlint-refactor
+      haskellconceal
+      haskellConcealPlus
+      Solarized
+      vim-nix
+      rainbow
+      rainbow_parentheses
+      vimproc
     ];
-#      set rtp+=~/.vim/pack/TMP/start/LanguageClient-neovim
 
     extraConfig = ''
-      let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }    
+      let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
       nnoremap <F5> :call LanguageClient_contextMenu()<CR>
       map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
       map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
@@ -119,6 +167,10 @@ in
       map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
       map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
     '';
+  };
+
+  programs.mpv = {
+    enable = true;
   };
 
   services = {
@@ -141,6 +193,9 @@ in
     xembed-sni-proxy = {
       enable = true;
     };
+    emacs = {
+      enable = true;
+    };
     pasystray = {
       enable = true;
     };
@@ -154,11 +209,11 @@ in
         background = "#2d2d2d";
       };
       extraConfig = ''
-grow_gravity W
-icon_gravity NE
-kludges force_icons_size,use_icons_hints
-skip_taskbar yes
-window_layer top
+        grow_gravity W
+        icon_gravity NE
+        kludges force_icons_size,use_icons_hints
+        skip_taskbar yes
+        window_layer top
       '';
     };
     udiskie = {
@@ -192,17 +247,6 @@ window_layer top
         ];
 
       config = ./xmonad.hs;
-#      command = let
-#            xmonad = pkgs.xmonad-with-packages.override {
-#              packages = self: [ self.xmonad-contrib self.taffybar ];
-#            };
-#            in
-#            ''
-#              ${xmonad}/bin/xmonad
-#              ${pkgs.pasystray}/bin/pasystray &
-#              ${pkgs.gxneur}/bin/gxneur &
-#             '';
-#      };
     };
   };
   gtk = {
@@ -216,16 +260,14 @@ window_layer top
       name = "hicolor";
     };
   };
-#  home.file.".xmonad/xmonad.hs".text = builtins.readFile ./xmonad.hs;
-#  home.file.".config/xmobar/xmobarrc".text = builtins.readFile ./xmobarrc;
 
-  home.file.".config/taffybar/taffybar.hs".text = builtins.readFile ./taffybar.hs;
-  home.file.".config/taffybar/taffybar.css".text = builtins.readFile ./taffybar.css;
+  home.file.".config/taffybar/taffybar.hs".source = ./taffybar.hs;
+  home.file.".config/taffybar/taffybar.css".source = ./taffybar.css;
 
   # gconftool-2 -s /apps/notify-osd/gravity --type=int номер
-  home.file.".notify-osd".text = builtins.readFile ./notify-osd.conf;
-  home.file.".xxkbrc".text = builtins.readFile ./xxkbrc;
-  home.file.".Xmodmap".text = builtins.readFile ./Xmodmap;
+  home.file.".notify-osd".source = ./notify-osd.conf;
+  home.file.".xxkbrc".source = ./xxkbrc;
+  home.file.".Xmodmap".source = ./Xmodmap;
 
-  #https://github.com/brndnmtthws/conky
+  home.file.".spacemacs".source = ./spacemacs;
 }
