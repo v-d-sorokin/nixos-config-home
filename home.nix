@@ -1,38 +1,45 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+
+with lib;
 
 let
-  all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
+
   spacemacs = pkgs.fetchFromGitHub {
     owner = "syl20bnr";
     repo = "spacemacs";
-    rev = "3747afb4b02575e794c8e74d1ca9af2fdbd9c525";
-    sha256 = "13yrv5j8lan19kg532x5q8rg4hqqm8d5h22dwz9hg9j43hhsq5q8";
+    rev = "22d200fbabfea2ac1771fbd4657c395cd5331194";
+    sha256 = "13yrv5j8lan19kg532x5q8rg4hqqm8d5h22dwz9hg9j43hhsq500";
     postFetch = ''
       mkdir -p $out
       tar xf $downloadedFile --strip=1 --directory=$out
       mkdir -p $out/.cache
     '';
   };
+
+  hostname = readFile /etc/nixos/hostname;
+
+  myide = (import (builtins.fetchTarball "https://github.com/hercules-ci/ghcide-nix/tarball/master") {}).ghcide-ghc865;
+  #myide = (import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {}).selection { selector = p: { inherit (p) ghc865; }; };
 in
-{
+mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
+({
   home.packages = with pkgs; [
     htop
+    iotop
+    atop
     fortune
     libnotify
     notify-osd
     pasystray
-    xlibs.xbacklight
     conky
-#    evilvte
     rxvt_unicode
     gxneur
     libreoffice
     gnome3.nautilus
-#    emacs
     chromium
     tree
     gnome3.adwaita-icon-theme
-#    sopcast-cli
+    sopcast-cli
     coolreader
     fbreader
     at-spi2-core
@@ -51,11 +58,12 @@ in
     linuxPackages.cpupower
     pwgen
 
-#    mpv
     smplayer
     transmission
 
-    (all-hies.selection { selector = p: { inherit (p) ghc865; }; })
+    acestream-player
+
+    myide
   ] ++ (with pkgs.haskellPackages; [
     si
     taffybar
@@ -68,7 +76,6 @@ in
     hasktags
     hoogle
     cabal-install
-#    cabal-helper
     cabal2nix
   ]);
 
@@ -81,14 +88,27 @@ in
     enable = true;
     oh-my-zsh = {
       enable = true;
-      theme = "cloud";
+      theme = "awesomepanda";
       plugins = [ "git" "cabal" "docker" "git-extras" "python" "sudo" "systemd" "tmux" ];
     };
+    initExtra = ''
+      printf '\033[5 q\r'
+    '';
   };
 
   programs.urxvt = {
     enable = true;
-    fonts = [ "xft:Dejavu Sans Mono:pixelsize=30" ];
+    keybindings = {
+      "Shift-Control-C" = "eval:selection_to_clipboard";
+      "Shift-Control-V" = "eval:paste_clipboard";
+    };
+
+    extraConfig = {
+      background = "#8888A0";
+      bell-command = "notify-send \"urxvt: bell\"";
+      cursorBlink = "0";
+      cursorUnderline = "1";
+    };
   };
 
   programs.jq = {
@@ -101,28 +121,6 @@ in
 
   programs.emacs = {
     enable = true;
-    extraPackages = epkgs: [
-      #epkgs.nix-mode
-      #epkgs.magit
-      #epkgs.use-package
-      #epkgs.dante
-      #epkgs.flycheck-color-mode-line
-      #epkgs.flycheck-pos-tip
-      #epkgs.flymake-hlint
-      #epkgs.flycheck-haskell
-      # epkgs.zerodark-theme
-      #epkgs.undo-tree
-      #epkgs.idris-mode
-      #epkgs.haskell-mode
-      #epkgs.company
-      #epkgs.company-ghc
-      #epkgs.company-dict
-      #epkgs.company-cabal
-      #epkgs.lsp-mode
-      #epkgs.lsp-ui
-      #epkgs.lsp-haskell
-      #epkgs.company-lsp
-    ];
   };
 
   programs.git = {
@@ -223,9 +221,6 @@ in
       enable = true;
       tray = false;
     };
-    network-manager-applet = {
-      enable = true;
-    };
   };
   xsession = {
     enable = true;
@@ -256,18 +251,31 @@ in
       name = "DejaVu Sans 12";
     };
     iconTheme = {
-      package = pkgs.hicolor_icon_theme;
-      name = "hicolor";
+      package = pkgs.gnome3.adwaita-icon-theme; #pkgs.hicolor_icon_theme;
+      name = "Adwaita";
     };
   };
 
-  home.file.".config/taffybar/taffybar.hs".source = ./taffybar.hs;
-  home.file.".config/taffybar/taffybar.css".source = ./taffybar.css;
+  systemd.user.services = {
+    dropbox = {
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.dropbox}/bin/dropbox start";
+        Restart = "always";
+      };
+    };
+  };
 
-  # gconftool-2 -s /apps/notify-osd/gravity --type=int номер
-  home.file.".notify-osd".source = ./notify-osd.conf;
-  home.file.".xxkbrc".source = ./xxkbrc;
-  home.file.".Xmodmap".source = ./Xmodmap;
+  home.file = {
+    ".config/taffybar/taffybar.hs".source = toString ./. + "/${hostname}/taffybar.hs";
+    ".config/taffybar/taffybar.css".source = toString ./. + "/${hostname}/taffybar.css";
 
-  home.file.".spacemacs".source = ./spacemacs;
-}
+    ".notify-osd".source = ./notify-osd.conf;
+    ".xxkbrc".source = ./xxkbrc;
+    ".Xmodmap".source = toString ./. + "/${hostname}/Xmodmap";
+
+    ".spacemacs".source = ./spacemacs;
+
+    ".lynxrc".source = ./lynxrc;
+  };
+})]
