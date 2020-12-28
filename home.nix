@@ -18,15 +18,23 @@ let
 
   hostname = readFile /etc/nixos/hostname;
 
-  myide = (import (builtins.fetchTarball "https://github.com/hercules-ci/ghcide-nix/tarball/master") {}).ghcide-ghc865;
-  #myide = (import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {}).selection { selector = p: { inherit (p) ghc865; }; };
+  #myide = (import (builtins.fetchTarball "https://github.com/hercules-ci/ghcide-nix/tarball/master") {}).ghcide-ghc865;
+  myide = (import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {}).selection { selector = p: { inherit (p) ghc882; }; };
 in
 mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
 ({
   home.packages = with pkgs; [
+    fwupd
+    nvme-cli
+
+    firefox
+    audacious
     htop
     iotop
     atop
+    nix-top
+    nixfmt
+    nix-diff
     fortune
     libnotify
     notify-osd
@@ -39,8 +47,8 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     chromium
     tree
     gnome3.adwaita-icon-theme
-    sopcast-cli
-    coolreader
+#    sopcast-cli
+#    coolreader
     fbreader
     at-spi2-core
     lynx
@@ -48,10 +56,16 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     tmux
     plantuml
     dropbox
+    gwenview
+    dia
+    ufoai
 
     ccls
-    pythonPackages.python-language-server
+#    pythonPackages.python-language-server
     python2
+
+    gdb
+    minicom
 
     ghc
     cachix
@@ -59,40 +73,81 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     pwgen
 
     smplayer
-    transmission
+#    transmission
+#    transmission-gtk
+    qbittorrent
 
-    acestream-player
+#    acestream-player
 
-    myide
+#    myide
+    gnumake
+    binutils
+    lsof
+    direnv
+    gnome3.gnome-terminal
+    curl
+    evince
+    file
+    unrar
+    p7zip
+    unzip
+    wineWowPackages.stable
+    winetricks
+    pavucontrol
+    kodi
+    gnome3.gnome-mines
+    youtube-dl
+
+    virt-manager
+    thunderbird
+    pidgin
+
+    torbrowser
   ] ++ (with pkgs.haskellPackages; [
-    si
+#    si
     taffybar
     apply-refact
-    hlint
-    hindent
-    stylish-haskell
+#    hlint
+#    hindent
+#    stylish-haskell
     structured-haskell-mode
 #    hoogle-index
     hasktags
-    hoogle
+#    hoogle
     cabal-install
     cabal2nix
+  ]) ++ (with pkgs.linuxPackages; [
+#    turbostat
   ]);
 
   manual = {
-    html.enable = true;
-    manpages.enable = true;
+    html.enable = false;
+    manpages.enable = false;
   };
 
   programs.zsh = {
     enable = true;
     oh-my-zsh = {
-      enable = true;
-      theme = "awesomepanda";
-      plugins = [ "git" "cabal" "docker" "git-extras" "python" "sudo" "systemd" "tmux" ];
+      enable = false;
+      theme = "powerlevel9k";
+      plugins = [ "git" "cabal" "docker" "git-extras" "python" "sudo" "systemd" "tmux" "powerline"
+        {
+          name = "zsh-syntax-highlighting";
+          src = pkgs.fetchFromGitHub {
+            owner = "zsh-users";
+            repo = "zsh-syntax-highlighting";
+            rev = "be3882aeb054d01f6667facc31522e82f00b5e94";
+            sha256 = "0w8x5ilpwx90s2s2y56vbzq92ircmrf0l5x8hz4g1nx3qzawv6af";
+          };
+        }
+      ];
     };
     initExtra = ''
-      printf '\033[5 q\r'
+      source ${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme
+
+      eval "$(direnv hook zsh)"
+
+      export PATH=$PATH:~/.local/bin
     '';
   };
 
@@ -115,9 +170,12 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     enable = true;
   };
 
-  programs.firefox = {
-    enable = true;
-  };
+#  programs.firefox = {
+#    enable = true;
+#    enableAdobeFlash = false;
+#    enableGoogleTalk = false;
+#    enableIcedTea = false;
+#  };
 
   programs.emacs = {
     enable = true;
@@ -133,6 +191,15 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
   };
   programs.ssh = {
     enable = true;
+    matchBlocks = {
+      "*office.numatech.ru" = {
+        hostname = "gitlab.office.numatech.ru";
+        identityFile = "/home/vs/.ssh/numa-id_rsa";
+      };
+      "*" = {
+        identityFile = [ "~/.ssh/id_rsa" "~/.ssh/numa-id_rsa" ];
+      };
+    };
   };
   programs.neovim = {
     enable = true;
@@ -172,10 +239,10 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
   };
 
   services = {
-    compton = {
+    picom = {
       enable = true;
       backend = "glx";
-      vSync = "opengl-swc";
+      vSync = true;
     };
     random-background = {
       enable = true;
@@ -191,8 +258,17 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     xembed-sni-proxy = {
       enable = true;
     };
-    emacs = {
+    blueman-applet = {
       enable = true;
+    };
+    lorri.enable = true;
+    polybar = {
+      enable = false;
+      config = {};
+      script = "polybar bar &";
+    };
+    emacs = {
+#      enable = true;
     };
     pasystray = {
       enable = true;
@@ -227,7 +303,7 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     pointerCursor = {
       package = pkgs.oxygen;
       name = "Oxygen_Black";
-      size = 48;
+#      size = 48;
       defaultCursor = "left_ptr";
     };
     initExtra = ''
@@ -263,6 +339,20 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
         ExecStart = "${pkgs.dropbox}/bin/dropbox start";
         Restart = "always";
       };
+      Install = {
+        WantedBy = [ "hm-graphical-session.target" ];
+      };
+    };
+    emacs = {
+      Service = {
+        Environment = "SSH_AUTH_SOCK=%t/keyring/ssh";
+      };
+    };
+    mpris-proxy = {
+      Unit.Description = "Mpris proxy";
+      Unit.After = [ "network.target" "sound.target" ];
+      Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
+      Install.WantedBy = [ "hm-graphical-session.target" ];
     };
   };
 
