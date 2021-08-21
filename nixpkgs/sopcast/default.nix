@@ -3,7 +3,7 @@ stdenv.mkDerivation {
   name = "sopcast-3.2.6";
   srcs = [ (fetchurl {
     url = http://download.sopcast.com/download/sp-auth.tgz;
-    sha256 = "1ncihfpgk15kjszi8ywfvggsac4pywrnpw05bqchqjymkm10g92w";
+    sha256 = "1rik6sfxknraf7jf45mfizwywjj5kdcm47xngj3s3yc554h3vvz3";
   })
 #  (fetchurl {
 #    url = http://www.sopcast.com/download/libstdcpp5.tgz;

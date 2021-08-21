@@ -47,12 +47,12 @@ main = do
 --        pager = taffyPagerNew defaultPagerConfig
         windows = windowsNew defaultWindowsConfig
 --        wea = weatherNew ((defaultWeatherConfig "ULLI") { weatherTemplate = "$tempC$ °C"}) 10
-        bat = batteryIconNew
+        bat = textBatteryNew "$percentage$% ($status$)"
         mem = pollingGraphNew memCfg 1 memCallback
         cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
         net = networkMonitorNew defaultNetFormat (Just [ "wlp3s0" ])
         hdd = dioMonitorNew hddCfg 1 "sda10"
-        tray = sniTrayNew -- sniTrayThatStartsWatcherEvenThoughThisIsABadWayToDoIt
+        tray = sniTrayThatStartsWatcherEvenThoughThisIsABadWayToDoIt
         audio = mpris2New
         layout = layoutNew defaultLayoutConfig
         workspaces = workspacesNew $ defaultWorkspacesConfig

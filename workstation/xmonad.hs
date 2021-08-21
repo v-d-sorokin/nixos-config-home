@@ -205,10 +205,10 @@ myManageHook = composeAll
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , className =? "Audacious"      --> doShift "ι"
+    , className =? "pidgin"         --> doShift "η"
     ] <+> manageDocks
 
 main = do
---    xmlproc <- spawnPipe "taffybar" -- "~/.cache/taffybar/taffybar-linux-x86_64"
     xmonad $ docks $ ewmh 
 --           $ pagerHints
            $ def

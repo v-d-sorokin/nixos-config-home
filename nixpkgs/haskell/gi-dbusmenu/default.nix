@@ -4,8 +4,8 @@
 }:
 mkDerivation {
   pname = "gi-dbusmenu";
-  version = "0.4.7";
-  sha256 = "c9312db8ce49a76a58559e8499b9ca24dae7f9faeb0b674c99b352bf9130622b";
+  version = "0.4.8";
+  sha256 = "266265c58d052245a705ecaaa543055a451520cb242f810419dcab34ae72db96";
   setupHaskellDepends = [ base Cabal gi-glib gi-gobject haskell-gi ];
   libraryHaskellDepends = [
     base bytestring containers gi-glib gi-gobject haskell-gi

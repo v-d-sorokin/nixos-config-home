@@ -4,8 +4,8 @@
 }:
 mkDerivation {
   pname = "gi-xlib";
-  version = "2.0.8";
-  sha256 = "43ea7d45532f9608b8c3b50427f8eae5d7575fb1c4ce03af26a07f22287e3d3e";
+  version = "2.0.9";
+  sha256 = "00d53dae1ce858856a044ee6ef945eced0dc3fe8f7d9c1f4c56ece06c68fc20a";
   setupHaskellDepends = [ base Cabal haskell-gi ];
   libraryHaskellDepends = [
     base bytestring containers haskell-gi haskell-gi-base

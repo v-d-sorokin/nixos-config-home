@@ -1,0 +1,116 @@
+======start======
+OS Info: Linux workstation 5.6.13 #1-NixOS SMP Thu May 14 05:59:28 UTC 2020 x86_64
+Linux RELEASE, cpu: AMD64, version: 2.5
+
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x4e3797]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x4e39c7]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x4e3223]
+/nix/store/nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30/lib/libc.so.6(+0x381c0)[0x7ffff76301c0]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x4da400]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x4dae61]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x422700]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x4a7dd5]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x4a8019]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x418fb0]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x430c45]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x430ec1]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x4363b8]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x435288]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x4a6ce8]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo(main+0x45)[0x40c0f5]
+/nix/store/nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30/lib/libc.so.6(__libc_start_main+0xeb)[0x7ffff761bd8b]
+/nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/bin/ufo[0x40c1ca]
+Loaded libraries:
+[0x140737353949184x-0x140737353953592x] linux-vdso.so.1
+[0x140737353691136x-0x140737353916269x] /nix/store/ra5an7v0kwm1l12nzql47hl721vp94vg-libpng-apng-1.6.37/lib/libpng16.so.16
+[0x140737353072640x-0x140737353685625x] /nix/store/zzg90fipwmmj60v12qwm69hq7vimarl1-libjpeg-turbo-2.0.4/lib/libjpeg.so.62
+[0x140737353035776x-0x140737353061989x] /nix/store/ql872rim172cy4b5zhs8f24vcx45f6ik-SDL_ttf-2.0.11/lib/libSDL_ttf-2.0.so.0
+[0x140737352384512x-0x140737353021805x] /nix/store/bj7d89cla1his92xf5xsj08jnhbv8ylb-SDL-1.2.15/lib/libSDL-1.2.so.0
+[0x140737352249344x-0x140737352381125x] /nix/store/nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30/lib/libpthread.so.0
+[0x140737351925760x-0x140737352241221x] /nix/store/mwaj9453igzsnl9x5xywylpki395i1ll-SDL_mixer-1.2.12/lib/libSDL_mixer-1.2.so.0
+[0x140737351344128x-0x140737351967173x] /nix/store/sd1x6w61vn2v0pw14jg7pqz2rd8xz818-libglvnd-1.3.1/lib/libGL.so.1
+[0x140737350758400x-0x140737351350349x] /nix/store/f0bj15hsyxp8zql86i75wi483zgldzy0-curl-7.69.1/lib/libcurl.so.4
+[0x140737350426624x-0x140737350747649x] /nix/store/6mwwb4bd0h2hgxwhfbi6i8x99rh29093-libtheora-1.1.1/lib/libtheora.so.0
+[0x140737350373376x-0x140737350404313x] /nix/store/zqi5prhap0qh6r4nkghnibbmkgn7sczf-libogg-1.3.4/lib/libogg.so.0
+[0x140737349255168x-0x140737350366949x] /nix/store/mcymg7g3gv8k5w9fwjdfb6calr13qr73-xvidcore-1.3.5/lib/libxvidcore.so.4
+[0x140737349025792x-0x140737349243585x] /nix/store/bq3p98rxcc38ban4m3hkcv9awr81hsa4-libvorbis-1.3.6/lib/libvorbis.so.0
+[0x140737348984832x-0x140737349016969x] /nix/store/nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30/lib/librt.so.1
+[0x140737348964352x-0x140737348975701x] /nix/store/nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30/lib/libdl.so.2
+[0x140737348845568x-0x140737348952677x] /nix/store/a6sbfdmqnw16i0giiv2dnwfg83gznnfj-zlib-1.2.11/lib/libz.so.1
+[0x140737346867200x-0x140737348914555x] /nix/store/244yvw8fnxdv6zfkq2c6jqmw35jg6ib7-gcc-9.3.0-lib/lib/libstdc++.so.6
+[0x140737345556480x-0x140737346866985x] /nix/store/nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30/lib/libm.so.6
+[0x140737345449984x-0x140737345546981x] /nix/store/nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30/lib/libgcc_s.so.1
+[0x140737343619072x-0x140737345478656x] /nix/store/nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30/lib/libc.so.6
+[0x140737342836736x-0x140737343647321x] /nix/store/lq4lky36aw1rdgiffljg7mx8f4l8q28w-freetype-2.10.1/lib/libfreetype.so.6
+[0x140737342750720x-0x140737342819793x] /nix/store/7i9rqnwh3m53z5a4md9sdgk1fdgk7cw4-bzip2-1.0.6.0.1/lib/libbz2.so.1
+[0x140737341423616x-0x140737342759129x] /nix/store/m7chc42b0mjndgmy5jsd4l2kgfhqpp67-libX11-1.6.8/lib/libX11.so.6
+[0x140737341337600x-0x140737341412961x] /nix/store/4v95myrcd72y6qxia8qndrs0r68p5djv-libXext-1.3.4/lib/libXext.so.6
+[0x140737341276160x-0x140737341319029x] /nix/store/hkm4ba0c7w8il4m63c6vxrg4nmvhhj9n-libXrandr-1.5.2/lib/libXrandr.so.2
+[0x140737341222912x-0x140737341262277x] /nix/store/8dj0149wzmw022dk7swrkqm4gvxng4by-libXrender-0.9.10/lib/libXrender.so.1
+[0x140737353957376x-0x140737354125684x] /nix/store/nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30/lib/ld-linux-x86-64.so.2
+[0x140737340403712x-0x140737341224745x] /nix/store/0pi1lqmgzb3f87xpwhsgq1caj82y9qzx-fluidsynth-2.0.6/lib/libfluidsynth.so.2
+[0x140737340354560x-0x140737340391641x] /nix/store/bq3p98rxcc38ban4m3hkcv9awr81hsa4-libvorbis-1.3.6/lib/libvorbisfile.so.3
+[0x140737339969536x-0x140737340347777x] /nix/store/7c9gvwdsackczscsbvqzhckwp03zx78z-smpeg-svn390/lib/libsmpeg-0.4.so.0
+[0x140737339748352x-0x140737339953945x] /nix/store/sd1x6w61vn2v0pw14jg7pqz2rd8xz818-libglvnd-1.3.1/lib/libGLX.so.0
+[0x140737338990592x-0x140737339847661x] /nix/store/sd1x6w61vn2v0pw14jg7pqz2rd8xz818-libglvnd-1.3.1/lib/libGLdispatch.so.0
+[0x140737338822656x-0x140737338993329x] /nix/store/3wwi17hszkg9jr12q2cy3d8q7vfqvp3i-nghttp2-1.40.0-lib/lib/libnghttp2.so.14
+[0x140737338560512x-0x140737338821401x] /nix/store/8l6knfgrr33vagcw9y40dwlsihwvpq3q-libssh2-1.9.0/lib/libssh2.so.1
+[0x140737337937920x-0x140737338586573x] /nix/store/b9yc1faqr159pwbrg9kabhl4zkpnk2v5-openssl-1.1.1g/lib/libssl.so.1.1
+[0x140737334870016x-0x140737338151877x] /nix/store/b9yc1faqr159pwbrg9kabhl4zkpnk2v5-openssl-1.1.1g/lib/libcrypto.so.1.1
+[0x140737334530048x-0x140737334870157x] /nix/store/mi6i4ifqzj4afyzp12lhbgzbqqw9x9sa-libkrb5-1.18/lib/libgssapi_krb5.so.2
+[0x140737333637120x-0x140737334586965x] /nix/store/mi6i4ifqzj4afyzp12lhbgzbqqw9x9sa-libkrb5-1.18/lib/libkrb5.so.3
+[0x140737333440512x-0x140737333631925x] /nix/store/mi6i4ifqzj4afyzp12lhbgzbqqw9x9sa-libkrb5-1.18/lib/libk5crypto.so.3
+[0x140737333415936x-0x140737333428541x] /nix/store/mi6i4ifqzj4afyzp12lhbgzbqqw9x9sa-libkrb5-1.18/lib/libcom_err.so.3
+[0x140737333223424x-0x140737333393489x] /nix/store/nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30/lib/libmvec.so.1
+[0x140737333047296x-0x140737333219581x] /nix/store/xn110h4h7x06gink0wznizw9d97fm0hq-libxcb-1.13.1/lib/libxcb.so.1
+[0x140737333026816x-0x140737333031029x] /nix/store/9yfbxys7srn3cgx9jsmfcyakwpkwr9fs-glib-2.64.1/lib/libgthread-2.0.so.0
+[0x140737331802112x-0x140737333027041x] /nix/store/9yfbxys7srn3cgx9jsmfcyakwpkwr9fs-glib-2.64.1/lib/libglib-2.0.so.0
+[0x140737331486720x-0x140737331808363x] /nix/store/da36jnq30a5nwssf3v953n84kkg3k0w1-libjack2-1.9.14/lib/libjack.so.0
+[0x140737330454528x-0x140737331526777x] /nix/store/ymb3k76mqbw1m0nb0rv9h550jqy7y4kb-alsa-lib-1.2.2/lib/libasound.so.2
+[0x140737330425856x-0x140737330441689x] /nix/store/q6mfkyz8446hnbaribkjzb333jvi6p4a-libpulseaudio-13.0/lib/libpulse-simple.so.0
+[0x140737330077696x-0x140737330425865x] /nix/store/q6mfkyz8446hnbaribkjzb333jvi6p4a-libpulseaudio-13.0/lib/libpulse.so.0
+[0x140737329569792x-0x140737330083789x] /nix/store/a1lai3n5swyr66fj1lk2qsxs8577m9d6-libsndfile-1.0.28/lib/libsndfile.so.1
+[0x140737329344512x-0x140737329556981x] /nix/store/244yvw8fnxdv6zfkq2c6jqmw35jg6ib7-gcc-9.3.0-lib/lib/libgomp.so.1
+[0x140737329283072x-0x140737329335617x] /nix/store/mi6i4ifqzj4afyzp12lhbgzbqqw9x9sa-libkrb5-1.18/lib/libkrb5support.so.0
+[0x140737329254400x-0x140737329270641x] /nix/store/ng9a1mxdd8agfhyi3pfriiv449pqw6iv-keyutils-1.6.1-lib/lib/libkeyutils.so.1
+[0x140737329152000x-0x140737329245477x] /nix/store/nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30/lib/libresolv.so.2
+[0x140737329123328x-0x140737329133565x] /nix/store/9pnnmdvk8aa864c88033jivlqy7yf3bk-libXau-1.0.9/lib/libXau.so.6
+[0x140737329090560x-0x140737329111289x] /nix/store/863nrbd0x67cblf433sakf42vgmc2ir0-libXdmcp-1.1.3/lib/libXdmcp.so.6
+[0x140737328623616x-0x140737329080785x] /nix/store/8a07wrvzqi7ak4b956nfclx0h3nfwl3b-pcre-8.44/lib/libpcre.so.1
+[0x140737328521216x-0x140737328612221x] /nix/store/ad5w02s0197s8mj6nvxwjihd9wp43rp9-celt-0.11.3/lib/libcelt0.so.2
+[0x140737328123904x-0x140737328504317x] /nix/store/s43prvk1mcplpvm2ijs8d0i2bl40fyc5-libopus-1.3.1/lib/libopus.so.0
+[0x140737327779840x-0x140737328128625x] /nix/store/55g1rszn8325nwwdh4pymfzz233hcl7s-dbus-1.12.16-lib/lib/libdbus-1.so.3
+[0x140737327235072x-0x140737327780085x] /nix/store/q6mfkyz8446hnbaribkjzb333jvi6p4a-libpulseaudio-13.0/lib/pulseaudio/libpulsecommon-13.0.so
+[0x140737327206400x-0x140737327224841x] /nix/store/vwa91zih3w7y9qcd35smdnbjc92vvqlm-libcap-2.27-lib/lib/libcap.so.2
+[0x140737326731264x-0x140737327189805x] /nix/store/i8zwfbbxvq02r6h8s8dnqiby9hdgdqcx-flac-1.3.3/lib/libFLAC.so.8
+[0x140737326022656x-0x140737326829265x] /nix/store/bq3p98rxcc38ban4m3hkcv9awr81hsa4-libvorbis-1.3.6/lib/libvorbisenc.so.2
+[0x140737325223936x-0x140737326035288x] /nix/store/rjx8nsjkmwfvi6gngv0m80a9xnnfd6x7-systemd-245.5-lib/lib/libsystemd.so.0
+[0x140737325043712x-0x140737325201593x] /nix/store/gv5yhri5rp7sqdxa78aqc59ivyza059q-xz-5.2.5/lib/liblzma.so.5
+[0x140737324830720x-0x140737325029357x] /nix/store/3fhi862ac934c08z0xws5ypfbljfvgbf-lz4-1.9.2/lib/liblz4.so.1
+[0x140737323655168x-0x140737324832757x] /nix/store/f2l7l00zabsih8dm9df3af6k41nnqsyw-libgcrypt-1.8.5/lib/libgcrypt.so.20
+[0x140737323507712x-0x140737323644421x] /nix/store/19hgni25hb2379ksk82ibk7v2nxv6ivm-libgpg-error-1.36/lib/libgpg-error.so.0
+[0x140737048993792x-0x140737049543349x] /run/opengl-driver/lib/libGLX_mesa.so.0
+[0x140737048760320x-0x140737049000165x] /nix/store/nzkkagmvyg8xbraqd58jcddn09i9xjah-mesa-20.0.2/lib/libglapi.so.0
+[0x140737048674304x-0x140737048749949x] /nix/store/l06yjwi9lr8ghpiqzr48cikqm3n2qxpy-libdrm-2.4.100/lib/libdrm.so.2
+[0x140737048551424x-0x140737048671701x] /nix/store/xn110h4h7x06gink0wznizw9d97fm0hq-libxcb-1.13.1/lib/libxcb-glx.so.0
+[0x140737048530944x-0x140737048534389x] /nix/store/m7chc42b0mjndgmy5jsd4l2kgfhqpp67-libX11-1.6.8/lib/libX11-xcb.so.1
+[0x140737048502272x-0x140737048519629x] /nix/store/xn110h4h7x06gink0wznizw9d97fm0hq-libxcb-1.13.1/lib/libxcb-dri2.so.0
+[0x140737048469504x-0x140737048490525x] /nix/store/qzfl2dz8z2mhrcksx2wd3rswcz3n54sf-libXfixes-5.0.3/lib/libXfixes.so.3
+[0x140737048449024x-0x140737048457653x] /nix/store/qmsv25jwdy8v1mwapbhq1m209065nxqg-libXdamage-1.1.5/lib/libXdamage.so.1
+[0x140737048416256x-0x140737048435337x] /nix/store/f25d7f7vxpi9774xwihym2vl2vjh5ilb-libXxf86vm-1.1.4/lib/libXxf86vm.so.1
+[0x140737048231936x-0x140737048414141x] /nix/store/2765gcl7nip27s125fsrpiiwd4d60vzr-expat-2.2.8/lib/libexpat.so.1
+[0x140737048207360x-0x140737048221733x] /nix/store/xn110h4h7x06gink0wznizw9d97fm0hq-libxcb-1.13.1/lib/libxcb-dri3.so.0
+[0x140737048186880x-0x140737048196177x] /nix/store/xn110h4h7x06gink0wznizw9d97fm0hq-libxcb-1.13.1/lib/libxcb-present.so.0
+[0x140737048145920x-0x140737048172577x] /nix/store/xn110h4h7x06gink0wznizw9d97fm0hq-libxcb-1.13.1/lib/libxcb-sync.so.1
+[0x140737048125440x-0x140737048131017x] /nix/store/linvhki4hvca53axdxxxf7bydaycg3ha-libxshmfence-1.3/lib/libxshmfence.so.1
+[0x140737024405504x-0x140737049190902x] /run/opengl-driver/lib/dri/radeonsi_dri.so
+[0x140736941015040x-0x140737030938937x] /nix/store/gcrr81wwj2kx6lkbdi50ibnaay56gmzf-llvm-9.0.1-lib/lib/libLLVM-9.so
+[0x140736940953600x-0x140736941005137x] /nix/store/l06yjwi9lr8ghpiqzr48cikqm3n2qxpy-libdrm-2.4.100/lib/libdrm_radeon.so.1
+[0x140736940855296x-0x140736940943709x] /nix/store/9hqljv1gj5csvpfb7rysa0dp5i4as3sa-libelf-0.8.13/lib/libelf.so.0
+[0x140736940806144x-0x140736940844401x] /nix/store/l06yjwi9lr8ghpiqzr48cikqm3n2qxpy-libdrm-2.4.100/lib/libdrm_amdgpu.so.1
+[0x140736940765184x-0x140736940796013x] /nix/store/l06yjwi9lr8ghpiqzr48cikqm3n2qxpy-libdrm-2.4.100/lib/libdrm_nouveau.so.2
+[0x140736940711936x-0x140736940753637x] /nix/store/kc0gcjma8p5azpyqyl2xqbl51ic5yk0s-libffi-3.3/lib/libffi.so.7
+[0x140736940236800x-0x140736940724117x] /nix/store/j3005jdd48vhhm1n8jvznix7fayx01np-ncurses-6.2/lib/libncursesw.so.6
+[0x140736938762240x-0x140736940273489x] /nix/store/gxddlgixdc3wvp82hw05fvw9r2bds5q0-libxml2-2.9.10/lib/libxml2.so.2
+[0x140736484560896x-0x140736485893637x] /nix/store/wv9bn5qaaba86k11188q7cr4r7bmh4dh-ufoai-2.5/lib//game.so
+======end========

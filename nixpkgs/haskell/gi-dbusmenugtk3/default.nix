@@ -5,8 +5,8 @@
 }:
 mkDerivation {
   pname = "gi-dbusmenugtk3";
-  version = "0.4.8";
-  sha256 = "1f3a5581ddb3edd5edb1301a519bb8ba7b784eee0dca55d0891aebbd40149659";
+  version = "0.4.9";
+  sha256 = "6047599fed72f17c13e1bfa3221a396544e890dadc640920a7cb378acc28d1b2";
   setupHaskellDepends = [
     base Cabal gi-atk gi-dbusmenu gi-gdk gi-gdkpixbuf gi-glib
     gi-gobject gi-gtk haskell-gi

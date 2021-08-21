@@ -48,9 +48,9 @@ main = do
         wea = weatherNew ((defaultWeatherConfig "ULLI") { weatherTemplate = "$tempC$ °C"}) 10
         mem = pollingGraphNew memCfg 1 memCallback
         cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
-        net = networkMonitorNew defaultNetFormat (Just [ "enp7s0" ])
-        hdd = dioMonitorNew hddCfg 1 "sdb1"
-        tray = sniTrayNew -- sniTrayThatStartsWatcherEvenThoughThisIsABadWayToDoIt
+        net = networkMonitorNew defaultNetFormat Nothing
+        hdd = dioMonitorNew hddCfg 1 "nvme0n1"
+        tray = sniTrayNew
         audio = mpris2New
         layout = layoutNew defaultLayoutConfig
         workspaces = workspacesNew $ defaultWorkspacesConfig

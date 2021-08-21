@@ -3,18 +3,92 @@
 with lib;
 
 let
+  unstable = import <unstable> {};
 
-  spacemacs = pkgs.fetchFromGitHub {
-    owner = "syl20bnr";
-    repo = "spacemacs";
-    rev = "22d200fbabfea2ac1771fbd4657c395cd5331194";
-    sha256 = "13yrv5j8lan19kg532x5q8rg4hqqm8d5h22dwz9hg9j43hhsq500";
-    postFetch = ''
-      mkdir -p $out
-      tar xf $downloadedFile --strip=1 --directory=$out
-      mkdir -p $out/.cache
-    '';
+  spinner-file = "spinner-1.7.3.el";
+  spinner-lzip = builtins.fetchurl {
+    url = "https://elpa.gnu.org/packages/${spinner-file}.lz";
+    sha256 = "188i2r7ixva78qd99ksyh3jagnijpvzzjvvx37n57x8nkp8jc4i4";
   };
+  emacsOverrides = self: super: rec {
+    spinner = super.spinner.override {
+      elpaBuild = args: super.elpaBuild (args // {
+        src = pkgs.runCommandLocal spinner-file {} ''
+          ${pkgs.lzip}/bin/lzip -d -c ${spinner-lzip} >$out
+        '';
+      });
+    };
+  };
+  emacs = ((pkgs.emacsPackagesGen pkgs.emacs).overrideScope' emacsOverrides).emacsWithPackages(epkgs: with epkgs; [
+#    all-the-icons
+#    auctex
+    coffee-mode
+    company
+    company-box
+    counsel
+    counsel-gtags
+    counsel-projectile
+    cmm-mode
+    dante
+    direnv
+    dhall-mode
+    doom-modeline
+    doom-themes
+    elm-mode
+    engine-mode
+    expand-region
+    fira-code-mode
+    flx
+    flycheck
+    forge
+    flycheck-elm
+    flycheck-haskell
+    glsl-mode
+    ggtags
+#    ghc
+    haml-mode
+    haskell-mode
+    haskell-snippets
+    hasky-extensions
+    helm
+    helm-gtags
+    helm-hoogle
+#    hindent
+    hlint-refactor
+    ivy
+    ivy-hydra
+    js2-mode
+    lua-mode
+    lsp-ivy
+    lsp-haskell
+    lsp-mode
+    lsp-treemacs
+    lsp-ui
+    markdown-mode
+    magit
+    nix-mode
+    org-drill
+    org-plus-contrib
+    org-roam
+    epkgs.ormolu
+    pkg-info
+    projectile
+    rainbow-delimiters
+    rspec-mode
+    rust-mode
+    smartparens
+    spacemacs-theme
+    swiper
+    typescript-mode
+    undo-tree
+    use-package
+    unicode-fonts
+    vterm
+    which-key
+    yaml-mode
+    ]);
+
+  torbrowser_custom = unstable.torbrowser.override { pulseaudioSupport = true; };
 
   hostname = readFile /etc/nixos/hostname;
 
@@ -24,20 +98,28 @@ in
 mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
 ({
   home.packages = with pkgs; [
+    (pkgs.writeShellScriptBin "nixFlakes" ''
+      exec ${pkgs.nixUnstable}/bin/nix --experimental-features "nix-command flakes" "$@"
+    '')
+
     fwupd
     nvme-cli
 
-    firefox
     audacious
     htop
     iotop
     atop
+    niv
     nix-top
     nixfmt
+    nixpkgs-fmt
     nix-diff
+    nixpkgs-lint
+    nix-linter
+    nix-template
+    nixos-shell
     fortune
     libnotify
-    notify-osd
     pasystray
     conky
     rxvt_unicode
@@ -46,23 +128,27 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     gnome3.nautilus
     chromium
     tree
+    hicolor-icon-theme
     gnome3.adwaita-icon-theme
+    gnome3.networkmanagerapplet
 #    sopcast-cli
-#    coolreader
+    coolreader
     fbreader
     at-spi2-core
     lynx
     ctags
     tmux
     plantuml
-    dropbox
     gwenview
     dia
-    ufoai
+    dropbox-cli
+    gparted
+    gnome3.gnome-disk-utility
 
     ccls
 #    pythonPackages.python-language-server
     python2
+    python3
 
     gdb
     minicom
@@ -71,6 +157,10 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     cachix
     linuxPackages.cpupower
     pwgen
+    cdrtools
+    rpm
+    emacs
+    emacs-all-the-icons-fonts
 
     smplayer
 #    transmission
@@ -82,6 +172,8 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
 #    myide
     gnumake
     binutils
+    strace
+    ltrace
     lsof
     direnv
     gnome3.gnome-terminal
@@ -101,18 +193,19 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     virt-manager
     thunderbird
     pidgin
+    nheko
 
-    torbrowser
+    torbrowser_custom
   ] ++ (with pkgs.haskellPackages; [
 #    si
-    taffybar
-    apply-refact
+#    taffybar
+#    apply-refact
 #    hlint
 #    hindent
 #    stylish-haskell
-    structured-haskell-mode
+#    structured-haskell-mode
 #    hoogle-index
-    hasktags
+#    hasktags
 #    hoogle
     cabal-install
     cabal2nix
@@ -123,6 +216,48 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
   manual = {
     html.enable = false;
     manpages.enable = false;
+  };
+
+  xdg = {
+    enable = true;
+    mime.enable = true;
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "application/x-zip-compressed-fb2" = "cr3.desktop";
+        "application/x-fictionbook+xml" = "cr3.desktop";
+
+        "video/mp4" = "mpv.desktop";
+        "video/mp4v" = "mpv.desktop";
+        "video/mpeg" = "mpv.desktop";
+        "video/x-avi" = "mpv.desktop";
+        "video/x-matroska" = "mpv.desktop";
+        "video/x-mpeg" = "mpv.desktop";
+
+        "x-scheme-handler/http" = "firefox.desktop";
+        "x-scheme-handler/https" = "firefox.desktop";
+        "x-scheme-handler/chrome" = "firefox.desktop";
+        "text/html" = "firefox.desktop";
+        "application/x-extension-htm" = "firefox.desktop";
+        "application/x-extension-html" = "firefox.desktop";
+        "application/x-extension-shtml" = "firefox.desktop";
+        "application/xhtml+xml" = "firefox.desktop";
+        "application/x-extension-xhtml" = "firefox.desktop";
+        "application/x-extension-xht" = "firefox.desktop";
+      };
+      associations.added = {
+        "x-scheme-handler/http" = "firefox.desktop";
+        "x-scheme-handler/https" = "firefox.desktop";
+        "x-scheme-handler/chrome" = "firefox.desktop";
+        "text/html" = "firefox.desktop";
+        "application/x-extension-htm" = "firefox.desktop";
+        "application/x-extension-html" = "firefox.desktop";
+        "application/x-extension-shtml" = "firefox.desktop";
+        "application/xhtml+xml" = "firefox.desktop";
+        "application/x-extension-xhtml" = "firefox.desktop";
+        "application/x-extension-xht" = "firefox.desktop";
+      };
+    };
   };
 
   programs.zsh = {
@@ -148,6 +283,10 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
       eval "$(direnv hook zsh)"
 
       export PATH=$PATH:~/.local/bin
+      export BROWSER=firefox
+      export DIRENV_ALLOW_NIX=1
+
+      alias vi="vim"
     '';
   };
 
@@ -160,7 +299,7 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
 
     extraConfig = {
       background = "#8888A0";
-      bell-command = "notify-send \"urxvt: bell\"";
+#      bell-command = "notify-send \"urxvt: bell\"";
       cursorBlink = "0";
       cursorUnderline = "1";
     };
@@ -170,15 +309,13 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     enable = true;
   };
 
-#  programs.firefox = {
-#    enable = true;
-#    enableAdobeFlash = false;
-#    enableGoogleTalk = false;
-#    enableIcedTea = false;
-#  };
+  programs.firefox = {
+    enable = true;
+#    extensions = with pkgs.nur.repos.rycee.firefox-addons; [];
+  };
 
   programs.emacs = {
-    enable = true;
+    enable = false;
   };
 
   programs.git = {
@@ -201,9 +338,9 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
       };
     };
   };
-  programs.neovim = {
-    enable = true;
-  };
+#  programs.neovim = {
+#    enable = true;
+#  };
   programs.vim = {
     enable = true;
     plugins = with pkgs.vimPlugins; [
@@ -219,10 +356,19 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
       rainbow
       rainbow_parentheses
       vimproc
+      vim-mucomplete
     ];
 
     extraConfig = ''
-      let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
+      set completeopt+=menuone
+      set completeopt+=noselect
+      set shortmess+=c   " Shut off completion messages
+      set belloff+=ctrlg " If Vim beeps during completion
+
+      let g:mucomplete#enable_auto_at_startup = 1
+      let g:mucomplete#completion_delay = 1
+
+      let g:LanguageClient_serverCommands = { 'haskell': ['haskell-language-server'] }
       nnoremap <F5> :call LanguageClient_contextMenu()<CR>
       map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
       map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
@@ -239,24 +385,8 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
   };
 
   services = {
-    picom = {
-      enable = true;
-      backend = "glx";
-      vSync = true;
-    };
-    random-background = {
-      enable = true;
-      imageDirectory = "%h/Dropbox/Photos/Backgrounds";
-      interval = "30min";
-    };
-    status-notifier-watcher = {
-      enable = true;
-    };
-    taffybar = {
-      enable = true;
-    };
-    xembed-sni-proxy = {
-      enable = true;
+    dropbox = {
+      enable = false;
     };
     blueman-applet = {
       enable = true;
@@ -267,11 +397,8 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
       config = {};
       script = "polybar bar &";
     };
-    emacs = {
-#      enable = true;
-    };
     pasystray = {
-      enable = true;
+#      enable = true;
     };
     stalonetray = {
       enable = false;
@@ -297,28 +424,23 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
       enable = true;
       tray = false;
     };
+    kdeconnect = {
+      enable = true;
+      indicator = true;
+    };
   };
   xsession = {
-    enable = true;
     pointerCursor = {
       package = pkgs.oxygen;
       name = "Oxygen_Black";
-#      size = 48;
       defaultCursor = "left_ptr";
     };
     initExtra = ''
       ${pkgs.xorg.setxkbmap}/bin/setxkbmap -model pc105 -layout us,ru -option grp:lalt_lshift_toggle
     '';
     preferStatusNotifierItems = true;
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      extraPackages = haskellPackages: [
-          haskellPackages.taffybar
-        ];
-
-      config = ./xmonad.hs;
-    };
+  };
+  xresources = {
   };
   gtk = {
     enable = true;
@@ -327,44 +449,42 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
       name = "DejaVu Sans 12";
     };
     iconTheme = {
-      package = pkgs.gnome3.adwaita-icon-theme; #pkgs.hicolor_icon_theme;
-      name = "Adwaita";
+#      package = pkgs.gnome3.adwaita-icon-theme; #pkgs.hicolor_icon_theme;
+      name = "hicolor";
     };
   };
 
   systemd.user.services = {
-    dropbox = {
-      Service = {
-        Type = "simple";
-        ExecStart = "${pkgs.dropbox}/bin/dropbox start";
-        Restart = "always";
-      };
-      Install = {
-        WantedBy = [ "hm-graphical-session.target" ];
-      };
-    };
-    emacs = {
-      Service = {
-        Environment = "SSH_AUTH_SOCK=%t/keyring/ssh";
-      };
-    };
     mpris-proxy = {
       Unit.Description = "Mpris proxy";
       Unit.After = [ "network.target" "sound.target" ];
       Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
       Install.WantedBy = [ "hm-graphical-session.target" ];
     };
+    dropbox = {
+      Unit.Description = "Dropbox";
+      Install.WantedBy = [ "graphical-session.target" ];
+      Service = {
+        Environment = [
+          ("QT_PLUGIN_PATH=/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix)
+          ("QML2_IMPORT_PATH=/run/current-system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix)
+        ];
+        ExecStart = "${pkgs.dropbox.out}/bin/dropbox";
+        ExecReload = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";
+        KillMode = "control-group"; # upstream recommends process
+        Restart = "on-failure";
+        PrivateTmp = true;
+        ProtectSystem = "full";
+        Nice = 10;
+      };
+    };
   };
 
   home.file = {
-    ".config/taffybar/taffybar.hs".source = toString ./. + "/${hostname}/taffybar.hs";
-    ".config/taffybar/taffybar.css".source = toString ./. + "/${hostname}/taffybar.css";
-
-    ".notify-osd".source = ./notify-osd.conf;
     ".xxkbrc".source = ./xxkbrc;
     ".Xmodmap".source = toString ./. + "/${hostname}/Xmodmap";
 
-    ".spacemacs".source = ./spacemacs;
+#    ".spacemacs".source = ./spacemacs;
 
     ".lynxrc".source = ./lynxrc;
   };

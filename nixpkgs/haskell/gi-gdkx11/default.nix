@@ -5,8 +5,8 @@
 }:
 mkDerivation {
   pname = "gi-gdkx11";
-  version = "3.0.9";
-  sha256 = "ccb61eaa65dd6b5df9757d955a0b6d55128e946a8cb025deb60529b42fe77b7c";
+  version = "3.0.10";
+  sha256 = "2e61e0fd492ba50cb905c8e4105859cb07148eebacf04f42f994422c0b25d64d";
   setupHaskellDepends = [
     base Cabal gi-cairo gi-gdk gi-gio gi-gobject gi-xlib haskell-gi
   ];

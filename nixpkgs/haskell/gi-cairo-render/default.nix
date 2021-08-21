@@ -3,10 +3,8 @@
 }:
 mkDerivation {
   pname = "gi-cairo-render";
-  version = "0.0.1";
-  sha256 = "a466d5ab1a5a39ac9b2338d3134c1dd33cba59cfc1b9d6a01e2cd378acf52b2b";
-  revision = "1";
-  editedCabalFile = "10lpmb8js19zfgnph31yz4nzyv7kbqvq1lx07w12q702khqcqb7z";
+  version = "0.1.0";
+  sha256 = "fd8968fd190493e118d35bc80aee1fd556458ecea0166e224282130d95eb58ac";
   libraryHaskellDepends = [
     array base bytestring haskell-gi-base mtl text utf8-string
   ];
