@@ -60,4 +60,5 @@ main = do
                                           , endWidgets = map (>>= buildContentsBox) 
                                               [ tray, clock, bat, mem, cpu, hdd, net, audio ]
                                           , barHeight = 50
+                                          , monitorActions = usAllMonitors
                                           }

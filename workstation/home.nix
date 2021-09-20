@@ -1,7 +1,7 @@
 {pkgs}:
 {
   programs.urxvt = {
-    fonts = [ "xft:Dejavu Sans Mono:pixelsize=22" ];
+    fonts = [ "xft:Terminess Powerline:size=22" ];
   };
   xsession = {
     enable = true;
@@ -23,11 +23,11 @@
     network-manager-applet = {
       enable = true;
     };
-    picom = {
-      enable = true;
-      backend = "glx";
-      vSync = true;
-    };
+#    picom = {
+#      enable = true;
+#      backend = "glx";
+#      vSync = true;
+#    };
     random-background = {
       enable = true;
       imageDirectory = "%h/Dropbox/Photos/Backgrounds";
@@ -46,7 +46,7 @@
 
   home.packages = with pkgs; [
     notify-osd
-#    ufoai
+    ufoai
   ];
 
   home.file = {

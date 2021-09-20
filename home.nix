@@ -263,18 +263,18 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
   programs.zsh = {
     enable = true;
     oh-my-zsh = {
-      enable = false;
-      theme = "powerlevel9k";
-      plugins = [ "git" "cabal" "docker" "git-extras" "python" "sudo" "systemd" "tmux" "powerline"
-        {
-          name = "zsh-syntax-highlighting";
-          src = pkgs.fetchFromGitHub {
-            owner = "zsh-users";
-            repo = "zsh-syntax-highlighting";
-            rev = "be3882aeb054d01f6667facc31522e82f00b5e94";
-            sha256 = "0w8x5ilpwx90s2s2y56vbzq92ircmrf0l5x8hz4g1nx3qzawv6af";
-          };
-        }
+      enable = true;
+#      theme = "powerlevel9k";
+      plugins = [ "git" "cabal" "docker" "git-extras" "python" "sudo" "systemd" "tmux"
+#        {
+#          name = "zsh-syntax-highlighting";
+#          src = pkgs.fetchFromGitHub {
+#            owner = "zsh-users";
+#            repo = "zsh-syntax-highlighting";
+#            rev = "be3882aeb054d01f6667facc31522e82f00b5e94";
+#            sha256 = "0w8x5ilpwx90s2s2y56vbzq92ircmrf0l5x8hz4g1nx3qzawv6af";
+#          };
+#        }
       ];
     };
     initExtra = ''
@@ -284,6 +284,7 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
 
       export PATH=$PATH:~/.local/bin
       export BROWSER=firefox
+      export EDITOR=vim
       export DIRENV_ALLOW_NIX=1
 
       alias vi="vim"
@@ -300,8 +301,8 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     extraConfig = {
       background = "#8888A0";
 #      bell-command = "notify-send \"urxvt: bell\"";
-      cursorBlink = "0";
-      cursorUnderline = "1";
+      cursorBlink = "1";
+      cursorUnderline = "0";
     };
   };
 
@@ -322,6 +323,9 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     enable = true;
     userName = "Vladimir Sorokin";
     userEmail = "v.d.sorokin@gmail.com";
+    extraConfig = {
+      init.defaultBranch = "master";
+    };
     aliases = {
       co = "checkout";
     };
@@ -367,6 +371,7 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
 
       let g:mucomplete#enable_auto_at_startup = 1
       let g:mucomplete#completion_delay = 1
+      let g:airline_powerline_fonts = 1
 
       let g:LanguageClient_serverCommands = { 'haskell': ['haskell-language-server'] }
       nnoremap <F5> :call LanguageClient_contextMenu()<CR>
@@ -436,7 +441,6 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
       defaultCursor = "left_ptr";
     };
     initExtra = ''
-      ${pkgs.xorg.setxkbmap}/bin/setxkbmap -model pc105 -layout us,ru -option grp:lalt_lshift_toggle
     '';
     preferStatusNotifierItems = true;
   };
@@ -487,5 +491,10 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
 #    ".spacemacs".source = ./spacemacs;
 
     ".lynxrc".source = ./lynxrc;
+  };
+  home.keyboard = {
+    model = "pc105";
+    layout = "us,ru";
+    options =  [ "grp:lalt_lshift_toggle" ];
   };
 })]
