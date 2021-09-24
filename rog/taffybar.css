@@ -19,12 +19,12 @@
 	all: unset;
 
 	font-family: "Sans", sans-serif;
-	font-size: 18pt;
+	font-size: 14pt;
 	color: @font-color;
 }
 
 .taffy-box {
-	border-radius: 18px;
+	border-radius: 14px;
 	background-color: rgba(0.0, 0.0, 0.0, 0.3);
 }
 
@@ -49,7 +49,7 @@
 .workspace-label {
 	padding-right: 3px;
 	padding-left: 2px;
-	font-size: 18pt;
+	font-size: 14pt;
 }
 
 .active .contents {

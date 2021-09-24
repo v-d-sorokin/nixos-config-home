@@ -24,6 +24,9 @@
     };
     winetricks = super1.winetricks.override { wine = super1.wineWowPackages.stable; };
     ufoai = super1.callPackage ./ufoai {};
+    nixUnstable = super1.nixUnstable.override {
+      patches = [ ./unset-is-macho.patch ];
+    };
 
     libGLU_combined = super1.buildEnv {
       name = "libGLU-combined";
@@ -59,6 +62,7 @@
         cloud-googledrive = self.callPackage ~/Sources/cloud-googledrive { };
         cloud-sync = self.callPackage ~/Sources/cloud-sync { };
         base32-z-bytestring = pkgs.haskell.lib.dontCheck super.base32-z-bytestring;
+        haskell-docs-cli = self.callPackage ./haskell/haskell-docs-cli {};
       };
     };
   };

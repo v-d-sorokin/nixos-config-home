@@ -23,7 +23,7 @@
     };
 
     initExtra = ''
-      ${pkgs.xorg.xrandr}/bin/xrandr --dpi 144
+#      ${pkgs.xorg.xrandr}/bin/xrandr --dpi 144
     '';
   };
   xresources.properties = {

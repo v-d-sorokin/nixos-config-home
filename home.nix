@@ -92,8 +92,7 @@ let
 
   hostname = readFile /etc/nixos/hostname;
 
-  #myide = (import (builtins.fetchTarball "https://github.com/hercules-ci/ghcide-nix/tarball/master") {}).ghcide-ghc865;
-  myide = (import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {}).selection { selector = p: { inherit (p) ghc882; }; };
+  nix-direnv = pkgs.nix-direnv.override { enableFlakes = true; };
 in
 mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
 ({
@@ -169,13 +168,11 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
 
 #    acestream-player
 
-#    myide
     gnumake
     binutils
     strace
     ltrace
     lsof
-    direnv
     gnome3.gnome-terminal
     curl
     evince
@@ -209,6 +206,7 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
 #    hoogle
     cabal-install
     cabal2nix
+    haskell-docs-cli
   ]) ++ (with pkgs.linuxPackages; [
 #    turbostat
   ]);
@@ -264,28 +262,14 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
     enable = true;
     oh-my-zsh = {
       enable = true;
-#      theme = "powerlevel9k";
-      plugins = [ "git" "cabal" "docker" "git-extras" "python" "sudo" "systemd" "tmux"
-#        {
-#          name = "zsh-syntax-highlighting";
-#          src = pkgs.fetchFromGitHub {
-#            owner = "zsh-users";
-#            repo = "zsh-syntax-highlighting";
-#            rev = "be3882aeb054d01f6667facc31522e82f00b5e94";
-#            sha256 = "0w8x5ilpwx90s2s2y56vbzq92ircmrf0l5x8hz4g1nx3qzawv6af";
-#          };
-#        }
-      ];
+      plugins = [ "git" "cabal" "docker" "git-extras" "python" "sudo" "systemd" "tmux" ];
     };
     initExtra = ''
       source ${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme
 
-      eval "$(direnv hook zsh)"
-
       export PATH=$PATH:~/.local/bin
       export BROWSER=firefox
       export EDITOR=vim
-      export DIRENV_ALLOW_NIX=1
 
       alias vi="vim"
     '';
@@ -315,6 +299,14 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
 #    extensions = with pkgs.nur.repos.rycee.firefox-addons; [];
   };
 
+  programs.direnv = {
+    enable = true;
+    stdlib = ''
+      export NIX_BIN_PREFIX=${pkgs.nixUnstable}/bin
+      source ${nix-direnv}/share/nix-direnv/direnvrc
+    '';
+  };
+
   programs.emacs = {
     enable = false;
   };
@@ -342,9 +334,7 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
       };
     };
   };
-#  programs.neovim = {
-#    enable = true;
-#  };
+
   programs.vim = {
     enable = true;
     plugins = with pkgs.vimPlugins; [

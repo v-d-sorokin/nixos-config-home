@@ -58,5 +58,5 @@ main = do
     dyreTaffybar $ withBatteryRefresh $ withLogServer $ withToggleServer $ toTaffyConfig $ defaultSimpleTaffyConfig { startWidgets = workspaces : map (>>= buildContentsBox) [ layout, windows ]
                                           , endWidgets = map (>>= buildContentsBox) 
                                               [ wea, tray, clock, bat, mem, cpu, hdd, net, audio ]
-                                          , barHeight = 50
+                                          , barHeight = 55
                                           }
