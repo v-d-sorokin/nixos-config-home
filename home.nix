@@ -325,12 +325,12 @@ mkMerge [(import ((toString ./.) + "/${hostname}/home.nix") { inherit pkgs; })
   programs.ssh = {
     enable = true;
     matchBlocks = {
+      "*" = {
+        identityFile = [ "~/.ssh/home-id_rsa" "~/.ssh/numa-id_rsa" ];
+      };
       "*office.numatech.ru" = {
         hostname = "gitlab.office.numatech.ru";
-        identityFile = "/home/vs/.ssh/numa-id_rsa";
-      };
-      "*" = {
-        identityFile = [ "~/.ssh/id_rsa" "~/.ssh/numa-id_rsa" ];
+        identityFile = "~/.ssh/numa-id_rsa";
       };
     };
   };
