@@ -6,6 +6,14 @@
       letterspace = "-2";
     };
   };
+  programs.ssh = {
+    matchBlocks = {
+      "workstation.local" = {
+        identityFile = "~/.ssh/nix_remote";
+      };
+    };
+  };
+
   xsession = {
     enable = true;
     pointerCursor = {
@@ -51,6 +59,7 @@
 
   home.packages = with pkgs; [
     notify-osd
+    brightnessctl
   ];
 
   home.file = {

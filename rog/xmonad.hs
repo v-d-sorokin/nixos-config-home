@@ -152,8 +152,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((0                 , 0x1008ff8f),  spawn "scrot")
     , ((0                 , xF86XK_Music), spawn "audacious")
     , ((0                 , xF86XK_AudioMedia), spawn "audacious")
-    , ((0                 , xF86XK_MonBrightnessUp), spawn "xbacklight +5")
-    , ((0                 , xF86XK_MonBrightnessDown), spawn "xbacklight -5")
+    , ((0                 , xF86XK_MonBrightnessUp), spawn "brightnessctl set 5%-")
+    , ((0                 , xF86XK_MonBrightnessDown), spawn "brightnessctl set 5%+")
     , ((0                 , xF86XK_LaunchA), spawn "firefox")
     ]
     ++
